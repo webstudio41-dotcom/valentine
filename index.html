@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vault | Valentine Gift</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        p {
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .display {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            min-height: 35px;
+            border: 1px solid #333;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .key {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .key:active {
+            background: #ff4d4d;
+            transform: scale(0.9);
+        }
+
+        .unlock-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        /* Success Message Overlay */
+        #message-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .heart {
+            color: #ff4d4d;
+            font-size: 5rem;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>THE VAULT</h1>
+        <p>Enter Secret Date (DDMMYYYY)</p>
+        
+        <div class="display" id="display">________</div>
+
+        <div class="keypad">
+            <div class="key" onclick="press('1')">1</div>
+            <div class="key" onclick="press('2')">2</div>
+            <div class="key" onclick="press('3')">3</div>
+            <div class="key" onclick="press('4')">4</div>
+            <div class="key" onclick="press('5')">5</div>
+            <div class="key" onclick="press('6')">6</div>
+            <div class="key" onclick="press('7')">7</div>
+            <div class="key" onclick="press('8')">8</div>
+            <div class="key" onclick="press('9')">9</div>
+            <div class="key" onclick="clearLast()">⌫</div>
+            <div class="key" onclick="press('0')">0</div>
+        </div>
+
+        <button class="unlock-btn" onclick="checkCode()">Unlock Gift</button>
+    </div>
+
+    <div id="message-overlay">
+        <div class="heart">❤️</div>
+        <h1 id="surprise-text">Happy Valentine's Day!</h1>
+        <p>I Love You!</p>
+    </div>
+
+    <script>
+        let currentInput = "";
+        const correctCode = "14022024"; // Set your secret date here
+
+        function press(num) {
+            if (currentInput.length < 8) {
+                currentInput += num;
+                updateDisplay();
+            }
+        }
+
+        function clearLast() {
+            currentInput = currentInput.slice(0, -1);
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let displayStr = currentInput.padEnd(8, "_");
+            document.getElementById("display").innerText = displayStr;
+        }
+
+        function checkCode() {
+            if (currentInput === correctCode) {
+                document.getElementById("message-overlay").style.display = "flex";
+            } else {
+                alert("Incorrect Date! Try again.");
+                currentInput = "";
+                updateDisplay();
+            }
+        }
+    </script>
+</body>
+</html>
